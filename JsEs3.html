@@ -39,10 +39,18 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
-       if(last_operation !== null && typeof last_operation !== undefined){
-      // if (typeof last_operation === "undefined" || last_operation === null) {
-        var last_operation = localStorage.getItem("operation");
-        $("#tab").append(last_operation);
+      if ($("td").length === 0) {
+        var arrayLine = JSON.parse(localStorage.getItem("array") || "[]");
+        if (arrayLine !== []) {
+          console.log("stampa elementi");
+          arrayLine.forEach(function (item) {
+            console.log(item);
+          });
+          console.log("popolo tabella");
+          arrayLine.forEach(function (item) {
+            $("#tab").append(item);
+          });
+        }
       }
     </script>
     <script>
@@ -89,9 +97,11 @@
           risultato +
           "</td></tr>";
         var line = $(string);
-        localStorage.setItem("operation", string);
-        var last_operation = localStorage.getItem("operation");
         $("#tab").append(line);
+
+        var arrayLine = JSON.parse(localStorage.getItem("array") || "[]");
+        arrayLine.push(string);
+        localStorage.setItem("array", JSON.stringify(arrayLine));
       }
     </script>
   </body>
